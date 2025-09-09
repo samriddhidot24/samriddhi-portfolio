@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Samriddhi — Homepage</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/UXAI_LOGO.svg">
+
+  <style>
+    :root{
+      --bg:#1A1A1A;
+      --header-bg:#333333;
+      --text:#EDEDED;
+      --muted:#808080;
+      --card:#262626;
+      --page-x:120px;
+      --grad:linear-gradient(90deg,#E0005A,#950089,#620088,#B46870,#FFC954);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text)}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%;height:auto}
+
+    /* Type */
+    h1,h2,h3,h4{font-family:"Space Grotesk",sans-serif;font-weight:700;margin:0}
+    p,li,nav,button{font-family:"JetBrains Mono",monospace}
+
+    /* ===== Header (reusable) ===== */
+    header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(51,51,51,.65);
+      backdrop-filter:saturate(140%) blur(12px);
+      -webkit-backdrop-filter:saturate(140%) blur(12px);
+    }
+    .header-inner{position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 var(--page-x);min-height:80px}
+
+    .brand{position:relative;display:flex;align-items:center}
+    .brand img{width:52px;height:52px;border-radius:50%}
+
+    /* minimalist grey glossy hello chip */
+    .hello-badge{position:absolute;left:64px;top:50%;transform:translateY(-50%) translateX(-6px);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+    .hello-chip{
+      position:relative;display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:14px;white-space:nowrap;
+      font:600 14px "JetBrains Mono",monospace;color:#F5F5F5;
+      background:#2b2b2b; /* base */
+      background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 10px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.35);
+    }
+    .hello-chip::before{content:"";position:absolute;left:-7px;top:50%;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.05));border-left:1px solid rgba(255,255,255,.18);border-top:1px solid rgba(255,255,255,.18)}
+    .brand:hover .hello-badge{opacity:1;transform:translateY(-50%) translateX(0)}
+
+    /* center the nav perfectly */
+    .nav{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:24px;align-items:center;white-space:nowrap}
+    .nav a{font:600 18px "JetBrains Mono",monospace;padding:8px 12px;border-radius:10px}
+    .nav a:hover{background:#3D3D3D}
+
+    .actions{display:flex;gap:16px;align-items:center;white-space:nowrap}
+
+    /* CTAs */
+    .touch,.resume-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 16px;border-radius:12px;
+      font:600 16px "JetBrains Mono",monospace;cursor:pointer
+    }
+    .touch:hover{background:#3D3D3D}
+    /* Resume: glossy animated gradient white border */
+    .resume-btn{
+      border:1px solid transparent;
+      background:
+        linear-gradient(#1f1f1f,#1f1f1f) padding-box,
+        linear-gradient(120deg,rgba(255,255,255,.9),rgba(255,255,255,.3),rgba(255,255,255,.9)) border-box;
+      background-size:100% 100%,300% 100%;
+      animation:borderSlide 6s linear infinite;
+    }
+    @keyframes borderSlide{to{background-position:0 0,300% 0}}
+    .resume-btn img,.touch img{transition:transform .4s ease}
+    .resume-btn:hover img{transform:translateY(-3px) rotate(-10deg) scale(1.05)}
+    .touch:hover img{transform:translateX(5px) rotate(8deg)}
+
+    /* ===== Roller (marquee) ===== */
+    .marquee{position:relative;display:flex;align-items:center;background:var(--grad);overflow:hidden;height:32px;margin-top:32px}
+    .marquee::before,.marquee::after{content:"";position:absolute;left:0;right:0;height:2px;pointer-events:none}
+    .marquee::before{top:0;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.06))}
+    .marquee::after{bottom:0;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.28))}
+    .marquee-track{display:block;white-space:nowrap;line-height:1;animation:mar 28s linear infinite}
+    .marquee-track span{font:400 18px "JetBrains Mono",monospace;margin:0 8px}
+    .marquee-track .sep::after{content:"|";margin:0 8px;opacity:.65}
+    @keyframes mar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ===== Hero ===== */
+    .hero{display:grid;grid-template-columns:1.25fr 1fr;gap:50px;align-items:center;margin:102px var(--page-x) 0}
+
+    /* frame + icons: align to figma-like grid */
+    .icon-frame{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#222;padding:36px 48px;width:820px;height:344px;max-width:100%}
+    .icon-frame::after{content:"";position:absolute;inset:0;pointer-events:none;/* subtle inner grid lines like Figma */background:
+      /* horizontal (middle) */
+      linear-gradient(transparent calc(50% - .5px), rgba(255,255,255,.06) 0, rgba(255,255,255,.06) calc(50% + .5px), transparent 0),
+      /* vertical thirds */
+      linear-gradient(90deg,
+        transparent calc(33.333% - .5px), rgba(255,255,255,.06) 0, rgba(255,255,255,.06) calc(33.333% + .5px), transparent 0,
+        transparent calc(66.666% - .5px), rgba(255,255,255,.06) 0, rgba(255,255,255,.06) calc(66.666% + .5px), transparent 0);
+    }
+    .icons-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);column-gap:80px;row-gap:56px;place-items:center}
+    .ic img{width:108px;height:108px;transition:transform .28s ease;cursor:pointer}
+    .ic:hover img{transform:scale(1.06)}
+
+    /* Hover-fill overlay for icons — smooth (no glitch) */
+    .detail{position:absolute;inset:0;background:radial-gradient(1200px 600px at 20% 20%, rgba(255,255,255,.06), rgba(0,0,0,.72)), #1f1f1f;opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;transform:scale(1.0);display:block}
+    .detail.show{opacity:1}
+    .detail .content{width:100%;max-width:980px;margin:0 auto;display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:center;padding:28px}
+    .detail img{width:120px;height:120px}
+    .detail h3{font:700 24px "Space Grotesk",sans-serif;margin:0 0 6px}
+    .detail p{font:400 14px "JetBrains Mono",monospace;color:#ddd;margin:0 0 8px}
+    .detail ul{margin:0;padding-left:18px}
+    .detail li{font:500 14px "JetBrains Mono",monospace;margin:4px 0}
+
+    .hi{font:700 200px "Space Grotesk",sans-serif;line-height:.8;margin:0;background:linear-gradient(#fff,#ddd);-webkit-background-clip:text;color:transparent}
+    .subline{font:400 28px "JetBrains Mono",monospace;color:#fff;margin:0 0 22px}
+    .cta-line{display:flex;gap:16px}
+
+    /* ===== Works strip ===== */
+    .works-strip{background:#262626;padding:20px 0;margin-top:102px;text-align:center}
+    .works-line{display:flex;gap:24px;justify-content:center;font:700 40px "JetBrains Mono",monospace}
+    .works-line .fade{color:rgba(255,255,255,.35)}
+    .works-line .center{color:#fff}
+
+    /* ===== Tabs (fixed 528×62) ===== */
+    .segmented{width:528px;height:62px;margin:28px auto 0;padding:6px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:grid;grid-template-columns:1fr 1fr;position:relative;white-space:nowrap}
+    .seg{background:none;border:none;color:#fff;font:700 20px "JetBrains Mono",monospace;cursor:pointer;z-index:1}
+    .seg-active{position:absolute;top:6px;left:6px;height:calc(100% - 12px);width:calc(50% - 12px);border-radius:18px;background:linear-gradient(90deg,#EC0F6A,#F26D5F 50%,#FFC76B);transition:transform .35s ease;z-index:0}
+    .segmented[data-active="1"] .seg-active{transform:translateX(0)}
+    .segmented[data-active="2"] .seg-active{transform:translateX(100%)}
+    .segmented[data-active="1"] #tab-ux{text-shadow:0 0 14px rgba(255,255,255,.45)}
+    .segmented[data-active="2"] #tab-mg{text-shadow:0 0 14px rgba(255,255,255,.45)}
+
+    /* ===== Cards row (single line) ===== */
+    .cards{margin:60px auto 0;display:flex;gap:52px;justify-content:center;/* fix clipping on hover */overflow:visible;padding-inline:var(--page-x)}
+    .card{position:relative;border-radius:16px;overflow:hidden;border:3px solid transparent;background:linear-gradient(#1f1f1f,#1f1f1f) padding-box,linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,.12),rgba(255,255,255,.6)) border-box;transition:transform .3s ease, box-shadow .3s ease, filter .3s ease;will-change:transform}
+    .card img{width:360px;height:230px;object-fit:cover;transition:transform .35s ease}
+    .card:hover{z-index:5;transform:translateY(-8px) scale(1.02);box-shadow:0 16px 32px rgba(0,0,0,.45);filter:brightness(1.05)}
+    .card:hover img{transform:scale(1.03)}
+
+    /* ===== Footer (reusable) ===== */
+    footer{background:var(--header-bg);padding:24px var(--page-x);display:flex;justify-content:space-between;align-items:center;font:400 14px "JetBrains Mono",monospace;margin-top:120px}
+    footer .left,footer .right{display:flex;align-items:center;gap:14px}
+
+    /* ===== Responsive tweaks ===== */
+    @media (max-width:1100px){
+      :root{--page-x:24px}
+      .hero{grid-template-columns:1fr;gap:28px;margin-top:64px}
+      .detail .content{grid-template-columns:1fr}
+      .icons-grid{column-gap:72px;row-gap:64px}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a class="brand" href="#home" aria-label="Home">
+        <img src="assets/UXAI_LOGO.svg" alt="Avatar">
+        <!-- Hover tab: Hi, I'm Samriddhi -->
+        <div class="hello-badge" aria-hidden="true">
+          <div class="hello-chip">Hi, I'm Samriddhi</div>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#works">My Work</a>
+        <a href="https://www.linkedin.com/in/samriddhi-tiwari-2029a7223/" target="_blank" rel="noopener">About Me</a>
+        <a href="https://medium.com/@samriddhidt" target="_blank" rel="noopener">I Write</a>
+      </nav>
+      <div class="actions">
+        <a class="touch" href="mailto:hi@buildwithsam.work"><img src="assets/getintouch_icon.svg" alt=""> Get In Touch</a>
+        <a class="resume-btn" href="resume.pdf" target="_blank" rel="noopener"><img src="assets/resume_icon.svg" alt=""> RESUME</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Roller -->
+  <section class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>USER EXPERIENCE DESIGNER</span><span class="sep"></span>
+      <span>USER RESEARCHER</span><span class="sep"></span>
+      <span>INTERFACE &amp; INFORMATION DESIGNER</span><span class="sep"></span>
+      <span>GROWTH &amp; MARKETING</span><span class="sep"></span>
+      <span>SEO</span><span class="sep"></span>
+      <span>USER EXPERIENCE DESIGNER</span><span class="sep"></span>
+      <span>USER RESEARCHER</span><span class="sep"></span>
+      <span>INTERFACE &amp; INFORMATION DESIGNER</span><span class="sep"></span>
+      <span>GROWTH &amp; MARKETING</span><span class="sep"></span>
+      <span>SEO</span>
+    </div>
+  </section>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Hero">
+    <!-- Icons frame -->
+    <div class="icon-frame" id="frame">
+      <div class="icons-grid">
+        <div class="ic" data-key="flows"><img src="assets/1st_icon.svg" alt=""></div>
+        <div class="ic" data-key="data"><img src="assets/2nd_icon.svg" alt=""></div>
+        <div class="ic" data-key="visuals"><img src="assets/3rd_icon.svg" alt=""></div>
+        <div class="ic" data-key="ideas"><img src="assets/4th_icon.svg" alt=""></div>
+        <div class="ic" data-key="metrics"><img src="assets/5th_icon.svg" alt=""></div>
+        <div class="ic" data-key="iterate"><img src="assets/6th_icon.svg" alt=""></div>
+      </div>
+      <!-- hover-fill overlay -->
+      <div class="detail" id="detail"><!-- kept always in DOM for smoothness --></div>
+    </div>
+
+    <div>
+      <h1 class="hi">hi!</h1>
+      <p class="subline">I’m <b>Samriddhi Tiwari</b>, a growth-focused UX designer.</p>
+      <div class="cta-line">
+        <a class="resume-btn" href="resume.pdf" target="_blank" rel="noopener"><img src="assets/resume_icon.svg" alt=""> RESUME</a>
+        <a class="touch" href="#contact"><img src="assets/getintouch_icon.svg" alt=""> Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- My Works strip -->
+  <section class="works-strip" id="works">
+    <div class="works-line">
+      <span class="fade">My Works</span>
+      <span class="fade">My Works</span>
+      <span class="center">My Works</span>
+      <span class="fade">My Works</span>
+      <span class="fade">My Works</span>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <div class="segmented" id="segmented" data-active="1" role="tablist" aria-label="Work type">
+    <span class="seg-active" aria-hidden="true"></span>
+    <button class="seg" id="tab-ux" role="tab" aria-selected="true">User Experience</button>
+    <button class="seg" id="tab-mg" role="tab" aria-selected="false">Marketing &amp; Growth</button>
+  </div>
+
+  <!-- Cards (single row) -->
+  <div class="cards">
+    <a class="card" href="https://www.behance.net/gallery/193478235/Sahayata-Setu-App-Case-Study" target="_blank" rel="noopener"><img src="assets/1st_card.png" alt="Sahayata Setu case study"></a>
+    <a class="card" href="/one-project-one-payment/"><img src="assets/one_project_one_payment.png" alt="One Project, One Payment"></a>
+    <a class="card" href="https://www.behance.net/gallery/194370685/f16s-Logo-and-Brand-Design" target="_blank" rel="noopener"><img src="assets/3rd_card.png" alt="f16s — Logo & Brand"></a>
+  </div>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="left">Made w <img src="assets/heart.svg" width="14" alt="heart"> By Samriddhi.</div>
+    <div class="right">
+      <a class="touch" href="mailto:hi@buildwithsam.work"><img src="assets/getintouch_icon.svg" alt=""> Get In Touch</a>
+      <a class="resume-btn" href="resume.pdf" target="_blank" rel="noopener"><img src="assets/resume_icon.svg" alt=""> RESUME</a>
+    </div>
+  </footer>
+
+  <script>
+    /* segmented control */
+    const seg = document.getElementById('segmented');
+    const tabUX = document.getElementById('tab-ux');
+    const tabMG = document.getElementById('tab-mg');
+    function setSeg(n){
+      seg.dataset.active=String(n);
+      tabUX.setAttribute('aria-selected', n===1 ? 'true' : 'false');
+      tabMG.setAttribute('aria-selected', n===2 ? 'true' : 'false');
+    }
+    tabUX.addEventListener('click',()=>setSeg(1));
+    tabMG.addEventListener('click',()=>setSeg(2));
+
+    /* 6-icon hover — smooth fill frame, revert on leave */
+    const data={
+      flows:{img:'assets/1st_icon.svg', title:'I Design UX That Flows.', sub:'Designing UX that thinks like the user before the user even clicks.', bullets:['Journey Mapping','Task‑First Wireframes','No Dead‑Ends, Ever.']},
+      data:{img:'assets/2nd_icon.svg', title:'Creating Data‑Driven Designs.', sub:'From bounce rates to heatmaps, decode the why before designing the what.', bullets:['User Analytics','A/B Experiments','Conversion‑Driven Layouts']},
+      visuals:{img:'assets/3rd_icon.svg', title:'Visuals That Look Good & Feel Better', sub:"Not just pretty pixels — purpose‑led visuals that ship.", bullets:['Micro‑interactions','Design Systems','Consistency = Credibility']},
+      ideas:{img:'assets/4th_icon.svg', title:'Ideas, But Make It Smart', sub:'Not wild. Strategic. The kind that solve, scale, and stick.', bullets:['Brainstorm Sprints','Creative Strategy','Problem → Solution → Repeat']},
+      metrics:{img:'assets/5th_icon.svg', title:'Design That Moves Metrics', sub:'Whether CTRs or Cart Completions, I build to perform.', bullets:['SEO‑Aware Flows','Funnel Optimization','UX × Biz Impact']},
+      iterate:{img:'assets/6th_icon.svg', title:'Iterating W/O Getting Irritated :)', sub:'Feedback? Bring it on.', bullets:['Feedback‑First Process','Usability Tests']},
+    };
+
+    const frame  = document.getElementById('frame');
+    const detail = document.getElementById('detail');
+
+    function render(key){
+      const it=data[key];
+      detail.innerHTML = `
+        <div class="content">
+          <img src="${it.img}" alt=""/>
+          <div>
+            <h3>${it.title}</h3>
+            <p>${it.sub}</p>
+            <ul>${it.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+          </div>
+        </div>`;
+      detail.classList.add('show');
+    }
+
+    document.querySelectorAll('.ic').forEach(ic=>{
+      const key=ic.dataset.key;
+      ic.addEventListener('mouseenter',()=>render(key));
+      ic.addEventListener('focus',()=>render(key));
+      ic.addEventListener('mouseleave',()=>detail.classList.remove('show'));
+      ic.addEventListener('blur',()=>detail.classList.remove('show'));
+    });
+    frame.addEventListener('mouseleave',()=>detail.classList.remove('show'));
+  </script>
+</body>
+</html>

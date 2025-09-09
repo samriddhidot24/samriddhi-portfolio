@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — Samriddhi Tiwari</title>
+
+  <!-- Fonts (same as home) -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/UXAI_LOGO.svg" />
+
+  <style>
+    :root{
+      --bg:#1A1A1A;
+      --text:#EDEDED;
+      --muted:#BDBDBD;
+      --muted-2:#A2A2A2;
+      --line:#ffffff40;
+      --dash:#ffffff26;
+      --page-x:100px;
+      --card:#262626;
+      --success:#27C840;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--text)}
+    html{scroll-behavior:smooth}
+    img{display:block;max-width:100%;height:auto}
+    a{color:inherit;text-decoration:none}
+
+    /* Type */
+    h1,h2,h3{font-family:"Space Grotesk",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0}
+    p,li,button,small,nav,div{font-family:"JetBrains Mono",monospace}
+
+    /* =========================
+       Header
+       ========================= */
+    header{
+      position:sticky;top:0;z-index:1000;
+      background:rgba(51,51,51,.65);
+      backdrop-filter:saturate(140%) blur(12px);
+      -webkit-backdrop-filter:saturate(140%) blur(12px);
+    }
+    .header-inner{position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 var(--page-x);min-height:80px}
+    .brand{position:relative;display:flex;align-items:center}
+    .brand img{width:52px;height:52px;border-radius:50%}
+    .hello-badge{position:absolute;left:64px;top:50%;transform:translateY(-50%) translateX(-6px);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+    .hello-chip{
+      position:relative;display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:14px;white-space:nowrap;
+      font:600 14px "JetBrains Mono",monospace;color:#F5F5F5;
+      background:#2b2b2b;
+      background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 10px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.35);
+    }
+    .hello-chip::before{content:"";position:absolute;left:-7px;top:50%;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.05));border-left:1px solid rgba(255,255,255,.18);border-top:1px solid rgba(255,255,255,.18)}
+    .brand:hover .hello-badge{opacity:1;transform:translateY(-50%) translateX(0)}
+    .nav{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:24px;align-items:center;white-space:nowrap}
+    .nav a{font:600 18px "JetBrains Mono",monospace;padding:8px 12px;border-radius:10px}
+    .nav a:hover{background:#3D3D3D}
+    .actions{display:flex;gap:16px;align-items:center;white-space:nowrap}
+    .touch,.resume-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 16px;border-radius:12px;
+      font:600 16px "JetBrains Mono",monospace;cursor:pointer
+    }
+    .touch:hover{background:#3D3D3D}
+    .resume-btn{
+      border:1px solid transparent;
+      background:
+        linear-gradient(#1f1f1f,#1f1f1f) padding-box,
+        linear-gradient(120deg,rgba(255,255,255,.9),rgba(255,255,255,.3),rgba(255,255,255,.9)) border-box;
+      background-size:100% 100%,300% 100%;
+      animation:borderSlide 6s linear infinite;
+    }
+    @keyframes borderSlide{to{background-position:0 0,300% 0}}
+    .resume-btn img,.touch img{transition:transform .4s ease}
+    .resume-btn:hover img{transform:translateY(-3px) rotate(-10deg) scale(1.05)}
+    .touch:hover img{transform:translateX(5px) rotate(8deg)}
+
+    /* =========================
+       Section 1 — About hero
+       ========================= */
+    .about-hero{margin:52px var(--page-x) 0;border:1px solid #fff;border-radius:16px;padding:36px;background:#242424}
+    .about-wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:36px;align-items:center}
+    .about-title{display:flex;align-items:center;gap:14px;margin:0 0 14px}
+    .about-title img{width:52px;height:52px}
+    .about-title h1{font-weight:700;font-size:32px;letter-spacing:.5px}
+    .about-text{color:#D9D9D9;font-size:20px;line-height:1.7;margin:0 0 22px}
+    .link-stack{display:flex;flex-direction:column;gap:20px}
+    .text-cta{display:inline-flex;align-items:center;gap:10px;font-size:20px;transition:color .25s ease,font-size .25s ease,opacity .35s ease,transform .2s ease}
+    .text-cta img{width:18px;height:18px;transition:transform .2s ease}
+    .text-cta:hover img{transform:translateX(4px)}
+    #copyMail{background:transparent;border:0;padding:0;margin:0;appearance:none;color:inherit;cursor:pointer}
+    #copyMail:focus{outline:none}
+    /* SUCCESS TOAST: smaller (12px), green, non-bold, smooth fade/slide */
+    .text-cta.copied,
+.text-cta.copied2 {
+  color: var(--success) !important;
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0;
+  animation: toastIn .35s ease forwards;
+}
+
+    @keyframes toastIn{from{opacity:0;transform:translateY(2px)} to{opacity:1;transform:translateY(0)}}
+
+    .about-photo{justify-self:end}
+    .about-photo img{width:min(520px,100%);border-radius:22px;border:6px solid #2d2d2d;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)}
+
+    /* =========================
+       Section 2 — Experience & Works
+       ========================= */
+    .section{margin:62px var(--page-x) 0}
+    .section h2{font-size:24px;letter-spacing:.02em}
+    .company{position:relative;margin-top:42px}
+    .company-head{display:grid;grid-template-columns:52px 1fr auto;align-items:center;column-gap:18px}
+    .co-logo{width:52px;height:52px;border-radius:50%;overflow:hidden}
+    .co-logo img{width:100%;height:100%}
+    .co-name{display:flex;flex-direction:column;gap:6px}
+    .co-name h3{font-weight:600;font-size:32px;line-height:1}
+    .role{font-size:18px;color:#DDD}
+    .co-period{font-size:16px;color:var(--muted)}
+    .tools{margin-top:12px;margin-left:70px;color:#DDD}
+    .tools b{color:#fff}
+
+    .works-toggle{
+      margin:16px 0 0 70px;
+      height:32px;
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:0 12px;
+      background:#2c2c2c;border:1px solid rgba(255,255,255,.22);border-radius:10px;
+      font:600 14px "JetBrains Mono",monospace;color:#EDEDED;cursor:pointer;
+    }
+    .works-toggle img{
+      width:14px;height:14px;transition:transform .25s ease;
+      filter:brightness(0) invert(1);
+    }
+    .company[data-open="false"] .works-toggle img{transform:rotate(-90deg)}
+
+    .works{margin-top:46px;margin-left:26px}
+    .works-inner{overflow:hidden;transition:max-height .35s ease;max-height:2000px}
+    .company[data-open="false"] .works-inner{max-height:0}
+
+    .work{display:grid;grid-template-columns:52px 1fr auto;column-gap:18px;align-items:start;margin-bottom:28px}
+    .dot-wrap{position:relative;height:100%}
+    .dot{
+      position:absolute;left:50%;transform:translateX(-50%);
+      width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.08);
+      top:10px;
+    }
+    .dot-wrap::after{
+      content:"";position:absolute;left:50%;transform:translateX(-50%);
+      top:22px;bottom:-14px;width:2px;
+      background:
+        linear-gradient(#ffffff66,#ffffff66) 0 0/2px 10px no-repeat,
+        repeating-linear-gradient(#ffffff33 0 6px, #ffffff00 6px 12px);
+    }
+    .work:last-child .dot-wrap::after{display:none}
+
+    .work h4{
+      font-family:"JetBrains Mono",monospace;font-weight:700;font-size:20px;margin:0;
+      display:inline-flex;align-items:center;gap:8px
+    }
+    .work h4 .open{width:24px;height:24px;transition:transform .2s ease}
+    .work h4:hover .open{transform:translateX(2px) scale(1.08)}
+    .desc{color:#D9D9D9;font-size:16px;line-height:1.7;margin-top:12px}
+    .when{font-size:16px;color:var(--muted);white-space:nowrap;padding-top:2px}
+
+    /* =========================
+       Section 3 — Gallery
+       ========================= */
+    .me-outside{margin:102px var(--page-x) 0}
+    .me-outside h2{font-size:22px;letter-spacing:.06em;margin-bottom:24px}
+    .rail{position:relative;overflow:hidden;padding:12px 0}
+    .track{display:flex;gap:22px;width:max-content;animation:scrollX 40s linear infinite}
+    .card{
+      width:285px;height:200px;border-radius:18px;overflow:hidden;flex:0 0 auto;
+      position:relative;background:#1e1e1e;
+      border:4px solid rgba(255,255,255,.12);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 10px 24px rgba(0,0,0,.35);
+      transition:transform .35s ease;
+    }
+    .card:hover{transform:translateY(-4px)}
+    .card img{width:100%;height:100%;object-fit:cover}
+    @keyframes scrollX{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+    .out-links{margin-top:72px;display:flex;gap:32px;justify-content:center;align-items:center;flex-wrap:wrap}
+    .out-links .text-cta img{width:18px;height:18px;transition:transform .2s ease}
+    .out-links .text-cta:hover img{transform:translateX(4px)}
+    #copyMail2{background:transparent;border:0;padding:0;margin:0;appearance:none;color:inherit;cursor:pointer}
+    #copyMail2:focus{outline:none}
+    .text-cta.copied2{color:var(--success);font-weight:400;font-size:12px;opacity:0;animation:toastIn .35s ease forwards}
+
+    /* Footer */
+    footer{background:#333333;padding:24px var(--page-x);display:flex;justify-content:space-between;align-items:center;font:400 14px "JetBrains Mono",monospace;margin-top:120px}
+    footer .left,footer .right{display:flex;align-items:center;gap:14px}
+
+    @media (max-width:1100px){
+      :root{--page-x:24px}
+      .about-wrap{grid-template-columns:1fr}
+      .about-photo{justify-self:start}
+      .work{grid-template-columns:40px 1fr auto}
+      .co-name h3{font-size:26px}
+      .card{width:240px;height:180px}
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="header-inner">
+      <a class="brand" href="#home" aria-label="Home">
+        <img src="assets/UXAI_LOGO.svg" alt="Avatar">
+        <div class="hello-badge" aria-hidden="true">
+          <div class="hello-chip">Hi, I'm Samriddhi</div>
+        </div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/#works">My Works</a>
+        <a href="/about-me/" aria-current="page">About Me</a>
+        <a href="https://medium.com/@samriddhidt" target="_blank" rel="noopener">I Write</a>
+      </nav>
+      <div class="actions">
+        <a class="touch" href="mailto:hi@buildwithsam.work"><img src="assets/getintouch_icon.svg" alt=""> Get In Touch</a>
+        <a class="resume-btn" href="resume.pdf" target="_blank" rel="noopener"><img src="assets/resume_icon.svg" alt=""> RESUME</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Section 1 ===== -->
+  <section class="about-hero" id="top">
+    <div class="about-wrap">
+      <div>
+        <div class="about-title">
+          <img src="assets/hi.svg" alt="Hi">
+          <h1>HI THERE, I’M SAMRIDDHI TIWARI.</h1>
+        </div>
+
+        <p class="about-text">
+          A growth-focused UX designer with <a href="#exp" style="text-decoration:underline">3+ Years</a> of shaping products.
+          I love taking messy, complex problems and simplifying them into flows people actually enjoy using. Beyond the design files,
+          I often find myself experimenting with growth strategies, diving into marketing, and exploring how design can move both
+          users and business forward.
+        </p>
+
+        <div class="link-stack">
+          <a class="text-cta" href="resume.pdf" target="_blank" rel="noopener">Resume <img src="assets/side_arrow.svg" alt=""></a>
+          <a class="text-cta" href="https://www.linkedin.com/in/samriddhi-tiwari-2029a7223/" target="_blank" rel="noopener">LinkedIn <img src="assets/side_arrow.svg" alt=""></a>
+          <button id="copyMail" class="text-cta" type="button">Email <img src="assets/copy.svg" alt=""></button>
+        </div>
+      </div>
+
+      <div class="about-photo">
+        <img src="assets/sam.png" alt="Samriddhi Tiwari">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Section 2 — Experience & Works ===== -->
+  <section class="section" id="exp" aria-label="Experience & Works">
+    <h2>EXPERIENCE & WORKS</h2>
+
+    <!-- ===== Lioncircuits ===== -->
+    <article class="company" data-open="true">
+      <div class="company-head">
+        <div class="co-logo"><img src="assets/lc.svg" alt="LC"></div>
+        <div class="co-name">
+          <h3>LIONCIRCUITS</h3>
+          <div class="role">UX Designer</div>
+        </div>
+        <div class="co-period">April 2024–Present</div>
+      </div>
+
+      <div class="tools"><b>Tools I Used:</b> Figma, Microsoft Clarity, Notion, Spline, Google Search Console, Google Analytics, SEMrush, Ahrefs</div>
+
+      <button class="works-toggle" type="button" aria-expanded="true">
+        My Works
+        <img src="assets/down_arrow.svg" alt="">
+      </button>
+
+      <div class="works">
+        <div class="works-inner">
+          <!-- Work 1 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot" aria-hidden="true"></span></div>
+            <div>
+              <h4>
+                <a href="/one-project-one-payment/" target="_blank" rel="noopener">INTEGRATION OF CART SYSTEM & REDESIGNING THE ORDERING FLOW</a>
+                <svg class="open" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M14 3h7v7h-2V6.41L9.41 16 8 14.59 17.59 5H14z"/></svg>
+              </h4>
+              <p class="desc">
+                I designed and implemented LionCircuits’ first cart system from the ground up, transforming a fragmented checkout
+                process into a seamless, single-flow experience. This shift not only simplified ordering for users but also unlocked
+                the foundation for scaling payments, order tracking, and bulk procurement.
+              </p>
+            </div>
+            <div class="when">April–Aug 2024</div>
+          </div>
+
+          <!-- Work 2 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>REDESIGNING THE UX & UI OF STATIC PAGES</h4>
+              <p class="desc">
+                I led the redesign of LionCircuits’ static pages with a focus on growth and discoverability, creating
+                industry-focused landing pages that balanced strong UX with SEO strategy. Each page was structured with internal
+                linking, backlink opportunities, and rich, ranking keywords—helping the site drive organic traffic while showcasing
+                solutions tailored to specific verticals aligning with the page intent.
+              </p>
+            </div>
+            <div class="when">Aug–Sep 2024</div>
+          </div>
+
+          <!-- Work 3 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>LC USER DASHBOARD</h4>
+              <p class="desc">
+                I redesigned the LC dashboard to simplify how engineers and operations teams interact with their projects. The goal
+                was to surface the right information at the right time, from project status and key actions to a cleaner projects
+                table with meaningful columns and filters. By reducing clutter and restructuring content around user priorities, the
+                dashboard now makes complex workflows faster, clearer, and easier to manage end-to-end.
+              </p>
+            </div>
+            <div class="when">April–May 2024</div>
+          </div>
+
+          <!-- Work 4 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>E-COMMERCE PLATFORM FROM SCRATCH</h4>
+              <p class="desc">
+                I architected and designed LionCircuits’ first e-commerce platform for components, moving from a manual sourcing
+                model to a self-serve experience. The platform was built to support quick part discovery, real-time pricing, and
+                smooth order placement, with an emphasis on usability for engineers and procurement teams. This foundation not only
+                modernized how users purchased components but also unlocked scalability for future growth.
+              </p>
+            </div>
+            <div class="when">Sep–Nov 2024</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== Freelancing ===== -->
+    <article class="company" data-open="true" style="margin-top:56px">
+      <div class="company-head">
+        <div class="co-logo"><img src="assets/UXAI_LOGO.svg" alt="Freelance"></div>
+        <div class="co-name">
+          <h3>FREELANCING</h3>
+          <div class="role">UI/UX Designer</div>
+        </div>
+      <div class="co-period">April 2024–Present</div>
+      </div>
+
+      <div class="tools"><b>Tools I Used:</b> Figma, Notion, FigJam</div>
+
+      <button class="works-toggle" type="button" aria-expanded="true">
+        My Works
+        <img src="assets/down_arrow.svg" alt="">
+      </button>
+
+      <div class="works">
+        <div class="works-inner">
+          <!-- Work 1 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>
+                <a href="/lexa-application-design" target="_blank" rel="noopener">LEKSA APPLICATION DESIGN</a>
+                <svg class="open" viewBox="0 0 24 24"><path fill="#fff" d="M14 3h7v7h-2V6.41L9.41 16 8 14.59 17.59 5H14z"/></svg>
+              </h4>
+              <p class="desc">
+                Partnered with Leksa, an emerging home-automation company, to design their mobile application. Collaborating with
+                the R&D team at 44 Volts Design, I focused on understanding the target audience: homeowners seeking seamless device
+                control, energy-conscious users, and tech-savvy families. Based on this research, I created user flows, wireframes,
+                and high-fidelity screens that balanced ease-of-use with the depth needed for advanced features. I also worked
+                closely with developers to align on feasibility and ensure the design was implementation-ready.
+              </p>
+            </div>
+            <div class="when">Feb–Apr 2025</div>
+          </div>
+
+          <!-- Work 2 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>
+                <a href="https://www.behance.net/gallery/194370833/f16s-Website-Design" target="_blank" rel="noopener">F16s WEBSITE DESIGN</a>
+                <svg class="open" viewBox="0 0 24 24"><path fill="#fff" d="M14 3h7v7h-2V6.41L9.41 16 8 14.59 17.59 5H14z"/></svg>
+              </h4>
+              <p class="desc">
+                I designed the website for F16s, an air transport solutions company, focusing on a clean, modern UI that reflected
+                their brand identity. This project was centered on visual design and layout systems rather than UX flows, with
+                emphasis on typography, color balance, and responsive grids. The goal was to deliver a professional, trustworthy
+                interface that translated complex services into a simple and credible web presence.
+              </p>
+            </div>
+            <div class="when">Feb–Mar 2024</div>
+          </div>
+
+          <!-- Work 3 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>
+                <a href="https://www.behance.net/gallery/194370685/f16s-Logo-and-Brand-Design" target="_blank" rel="noopener">F16s – LOGO & BRAND DESIGN</a>
+                <svg class="open" viewBox="0 0 24 24"><path fill="#fff" d="M14 3h7v7h-2V6.41L9.41 16 8 14.59 17.59 5H14z"/></svg>
+              </h4>
+              <p class="desc">
+                I worked on both their brand identity and website design. This was a UI-led project where the focus was on creating
+                a modern visual language—from logo and color palette to a responsive, trust-driven web layout. The work emphasized
+                clarity, credibility, and consistency across touchpoints, ensuring that the brand felt both professional and
+                approachable in a competitive industry.
+              </p>
+            </div>
+            <div class="when">Jan–Mar 2024</div>
+          </div>
+
+          <!-- Work 4 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>
+                <a href="https://www.behance.net/gallery/193478235/Sahayata-Setu-App-Case-Study" target="_blank" rel="noopener">SAHAYATA SETU APPLICATION</a>
+                <svg class="open" viewBox="0 0 24 24"><path fill="#fff" d="M14 3h7v7h-2V6.41L9.41 16 8 14.59 17.59 5H14z"/></svg>
+              </h4>
+              <p class="desc">
+                Sahayata Setu was a personal project born from the realization that citizens often struggle to access government
+                schemes, each living on separate portals with inconsistent or absent design systems. I set out to create a unified
+                platform where all schemes could be discovered, understood, and applied for in one place.
+              </p>
+            </div>
+            <div class="when">Dec 2023–Mar 2024</div>
+          </div>
+
+          <!-- Work 5 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>
+                <a href="https://www.behance.net/samriddhit" target="_blank" rel="noopener">COMMUNITIES APPLICATION</a>
+                <svg class="open" viewBox="0 0 24 24"><path fill="#fff" d="M14 3h7v7h-2V6.41L9.41 16 8 14.59 17.59 5H14z"/></svg>
+              </h4>
+              <p class="desc">
+                My first full-fledged personal UX project, aimed at making it easier for people to discover and join local
+                communities. Through research and competitor analysis, I found gaps in discoverability, trust, and participation.
+                I designed a clean platform with user flows, events, and discussions that simplified connection. The prototype
+                reimagined how community engagement could feel more inclusive and human-centered.
+              </p>
+            </div>
+            <div class="when">Mar–Aug 2023</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== Brandshark ===== -->
+    <article class="company" data-open="true" style="margin-top:56px">
+      <div class="company-head">
+        <div class="co-logo"><img src="assets/brandshark.svg" alt="Brandshark"></div>
+        <div class="co-name">
+          <h3>BRANDSHARK</h3>
+          <div class="role">UI/UX Design Intern</div>
+        </div>
+        <div class="co-period">Sep 2023 – Dec 2023 | 4 Mos</div>
+      </div>
+
+      <div class="tools"><b>Tools I Used:</b> Figma, Adobe XD</div>
+
+      <button class="works-toggle" type="button" aria-expanded="true">
+        My Works
+        <img src="assets/down_arrow.svg" alt="">
+      </button>
+
+      <div class="works">
+        <div class="works-inner">
+          <!-- Work 1 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>THE NUDGE WEB DESIGN</h4>
+              <p class="desc">
+                As a UX Design Intern, I collaborated with The Nudge NGO to design a large-scale web platform showcasing their
+                impact and programs aimed at lifting people out of poverty. The project spanned 90+ screens and required constant
+                client touchpoints, approvals, and intense iterations. I handled wireframing, UI design, and alignment with
+                developers to ensure delivery. This experience sharpened my ability to balance client needs with design clarity
+                at scale.
+              </p>
+            </div>
+            <div class="when">Oct–Dec 2023</div>
+          </div>
+
+          <!-- Work 2 -->
+          <div class="work">
+            <div class="dot-wrap"><span class="dot"></span></div>
+            <div>
+              <h4>EVIDYALOKA WEB DESIGN</h4>
+              <p class="desc">
+                At Brandshark, I also designed for E-Vidyaloka, an NGO focused on providing free education to underprivileged
+                children. The process was research-driven and followed strict wireframing, approvals, and structured design cycles.
+                My role involved translating complex program details into simple, engaging UI screens that worked seamlessly for
+                their audience. This project reinforced my skills in designing for social impact while working within client
+                constraints.
+              </p>
+            </div>
+            <div class="when">Sep–Oct 2023</div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ===== Section 3 — “Me” a little out of work ===== -->
+  <section class="me-outside" aria-label="Me outside work">
+    <h2>“ME” A LITTLE OUT OF WORK</h2>
+
+    <div class="rail" aria-hidden="false">
+      <div class="track">
+        <!-- set 1 -->
+        <div class="card"><img src="assets/img01.png" alt=""></div>
+        <div class="card"><img src="assets/img02.png" alt=""></div>
+        <div class="card"><img src="assets/img03.png" alt=""></div>
+        <div class="card"><img src="assets/img04.png" alt=""></div>
+        <div class="card"><img src="assets/img05.png" alt=""></div>
+        <div class="card"><img src="assets/img06.png" alt=""></div>
+        <!-- set 2 (repeat for infinite scroll) -->
+        <div class="card"><img src="assets/img01.png" alt=""></div>
+        <div class="card"><img src="assets/img02.png" alt=""></div>
+        <div class="card"><img src="assets/img03.png" alt=""></div>
+        <div class="card"><img src="assets/img04.png" alt=""></div>
+        <div class="card"><img src="assets/img05.png" alt=""></div>
+        <div class="card"><img src="assets/img06.png" alt=""></div>
+      </div>
+    </div>
+
+    <div class="out-links">
+      <a class="text-cta" href="https://www.behance.net/samriddhi24" target="_blank" rel="noopener">Behance <img src="assets/side_arrow.svg" alt=""></a>
+      <a class="text-cta" href="resume.pdf" target="_blank" rel="noopener">Resume <img src="assets/side_arrow.svg" alt=""></a>
+      <a class="text-cta" href="https://www.linkedin.com/in/samriddhi-tiwari-2029a7223/" target="_blank" rel="noopener">LinkedIn <img src="assets/side_arrow.svg" alt=""></a>
+      <button id="copyMail2" class="text-cta" type="button">Email <img src="assets/copy.svg" alt=""></button>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer id="contact">
+    <div class="left">Made w <img src="assets/heart.svg" width="14" alt="heart"> By Samriddhi.</div>
+    <div class="right">
+      <a class="touch" href="mailto:hi@buildwithsam.work"><img src="assets/getintouch_icon.svg" alt=""> Get In Touch</a>
+      <a class="resume-btn" href="resume.pdf" target="_blank" rel="noopener"><img src="assets/resume_icon.svg" alt=""> RESUME</a>
+    </div>
+  </footer>
+
+  <script>
+    /* Copy email (Section 1) */
+    (function(){
+      const btn = document.getElementById('copyMail');
+      if(!btn) return;
+      const defaultHTML = `Email <img src="assets/copy.svg" alt="">`;
+      const successText = `copied! looking forward to your message :)`;
+      let timer = null;
+      btn.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText('hi@buildwithsam.work'); } catch(e){}
+        btn.classList.add('copied');
+        btn.innerText = successText;
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+          btn.classList.remove('copied');
+          btn.innerHTML = defaultHTML;
+        }, 4500);
+      });
+    })();
+
+    /* Copy email (Section 3 links row) */
+    (function(){
+      const btn = document.getElementById('copyMail2');
+      if(!btn) return;
+      const defaultHTML = `Email <img src="assets/copy.svg" alt="">`;
+      const successText = `copied! looking forward to your message :)`;
+      let timer = null;
+      btn.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText('hi@buildwithsam.work'); } catch(e){}
+        btn.classList.add('copied2');
+        btn.innerText = successText;
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+          btn.classList.remove('copied2');
+          btn.innerHTML = defaultHTML;
+        }, 4500);
+      });
+    })();
+
+    /* Toggle groups (Section 2) */
+    document.querySelectorAll('.company').forEach(group=>{
+      const btn = group.querySelector('.works-toggle');
+      if(!btn) return;
+      const setState = (open) => {
+        group.dataset.open = open ? 'true' : 'false';
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+      btn.addEventListener('click', ()=>{
+        const isOpen = group.dataset.open !== 'false';
+        setState(!isOpen);
+      });
+    });
+  </script>
+</body>
+</html>
