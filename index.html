@@ -118,8 +118,7 @@
     .detail ul{margin:0;padding-left:18px}
     .detail li{font:500 14px "JetBrains Mono",monospace;margin:4px 0}
 
-    .hi{font:700 200px "Space Grotesk",sans-serif;line-height:.8;margin:0;background:linear-gradient(#fff,#ddd);-webkit-background-clip:text;background-clip:text;
-color:transparent}
+    .hi{font:700 200px "Space Grotesk",sans-serif;line-height:.8;margin:0;background:linear-gradient(#fff,#ddd);-webkit-background-clip:text;background-clip:text;color:transparent}
     .subline{font:400 28px "JetBrains Mono",monospace;color:#fff;margin:0 0 22px}
     .cta-line{display:flex;gap:16px}
 
@@ -129,21 +128,13 @@ color:transparent}
     .works-line .fade{color:rgba(255,255,255,.35)}
     .works-line .center{color:#fff}
 
-    /* ===== Tabs (fixed 528×62) ===== */
-    .segmented{width:528px;height:62px;margin:28px auto 0;padding:6px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:grid;grid-template-columns:1fr 1fr;position:relative;white-space:nowrap}
-    .seg{background:none;border:none;color:#fff;font:700 20px "JetBrains Mono",monospace;cursor:pointer;z-index:1}
-    .seg-active{position:absolute;top:6px;left:6px;height:calc(100% - 12px);width:calc(50% - 12px);border-radius:18px;background:linear-gradient(90deg,#EC0F6A,#F26D5F 50%,#FFC76B);transition:transform .35s ease;z-index:0}
-    .segmented[data-active="1"] .seg-active{transform:translateX(0)}
-    .segmented[data-active="2"] .seg-active{transform:translateX(100%)}
-    #tab-ux[data-active="1"],
-#tab-mg[data-active="2"] {
-  text-shadow:0 0 14px rgba(255,255,255,.45);
-}
-
-
-    /* ===== Cards row (single line) ===== */
-    .cards{margin:60px auto 0;display:flex;gap:52px;justify-content:center;/* fix clipping on hover */overflow:visible;padding-inline:var(--page-x)}
-    .card{position:relative;border-radius:16px;overflow:hidden;border:3px solid transparent;background:linear-gradient(#1f1f1f,#1f1f1f) padding-box,linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,.12),rgba(255,255,255,.6)) border-box;transition:transform .3s ease, box-shadow .3s ease, filter .3s ease;will-change:transform}
+    /* ===== Cards ===== */
+    .cards{margin:60px auto 0;display:flex;gap:52px;justify-content:center;overflow:visible;padding-inline:var(--page-x)}
+    .cards + .cards{margin-top:52px;} /* second row spacing */
+    .card{position:relative;border-radius:16px;overflow:hidden;border:3px solid transparent;
+      background:linear-gradient(#1f1f1f,#1f1f1f) padding-box,
+      linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,.12),rgba(255,255,255,.6)) border-box;
+      transition:transform .3s ease, box-shadow .3s ease, filter .3s ease;will-change:transform}
     .card img{width:360px;height:230px;object-fit:cover;transition:transform .35s ease}
     .card:hover{z-index:5;transform:translateY(-8px) scale(1.02);box-shadow:0 16px 32px rgba(0,0,0,.45);filter:brightness(1.05)}
     .card:hover img{transform:scale(1.03)}
@@ -174,7 +165,7 @@ color:transparent}
       </a>
       <nav class="nav" aria-label="Primary">
         <a href="#works">My Work</a>
-<a href="/about-me/">About Me</a>
+        <a href="/about-me/">About Me</a>
         <a href="https://medium.com/@samriddhidt" target="_blank" rel="noopener">I Write</a>
       </nav>
       <div class="actions">
@@ -237,18 +228,30 @@ color:transparent}
     </div>
   </section>
 
-  <!-- Tabs -->
-  <div class="segmented" id="segmented" data-active="1" role="tablist" aria-label="Work type">
-    <span class="seg-active" aria-hidden="true"></span>
-    <button class="seg" id="tab-ux" role="tab" aria-selected="true">User Experience</button>
-    <button class="seg" id="tab-mg" role="tab" aria-selected="false">Marketing &amp; Growth</button>
+  <!-- Cards row 1 -->
+  <div class="cards">
+    <a class="card" href="/one-project-one-payment/">
+      <img src="assets/one_project_one_payment.png" alt="One Project, One Payment">
+    </a>
+    <a class="card" href="https://www.behance.net/gallery/193478235/Sahayata-Setu-App-Case-Study" target="_blank" rel="noopener">
+      <img src="assets/1st_card.png" alt="Sahayata Setu case study">
+    </a>
+    <a class="card" href="/leksa-application-design/">
+      <img src="assets/5th_card.png" alt="Leksa Application Design">
+    </a>
   </div>
 
-  <!-- Cards (single row) -->
+  <!-- Cards row 2 -->
   <div class="cards">
-    <a class="card" href="https://www.behance.net/gallery/193478235/Sahayata-Setu-App-Case-Study" target="_blank" rel="noopener"><img src="assets/1st_card.png" alt="Sahayata Setu case study"></a>
-    <a class="card" href="/one-project-one-payment/"><img src="assets/one_project_one_payment.png" alt="One Project, One Payment"></a>
-    <a class="card" href="https://www.behance.net/gallery/194370685/f16s-Logo-and-Brand-Design" target="_blank" rel="noopener"><img src="assets/3rd_card.png" alt="f16s — Logo & Brand"></a>
+    <a class="card" href="https://www.behance.net/gallery/194370685/f16s-Logo-and-Brand-Design" target="_blank" rel="noopener">
+      <img src="assets/2nd_card.png" alt="f16s — Logo & Brand">
+    </a>
+    <a class="card" href="https://www.behance.net/gallery/194389565/f16s-Website-Design" target="_blank" rel="noopener">
+      <img src="assets/3rd_card.png" alt="f16s — Website Design">
+    </a>
+    <a class="card" href="https://www.behance.net/gallery/177648913/Communities-App-(UIUX-Case-Study)" target="_blank" rel="noopener">
+      <img src="assets/6th_card.png" alt="Communities App — Case Study">
+    </a>
   </div>
 
   <!-- Footer -->
@@ -261,26 +264,14 @@ color:transparent}
   </footer>
 
   <script>
-    /* segmented control */
-    const seg = document.getElementById('segmented');
-    const tabUX = document.getElementById('tab-ux');
-    const tabMG = document.getElementById('tab-mg');
-    function setSeg(n){
-      seg.dataset.active=String(n);
-      tabUX.setAttribute('aria-selected', n===1 ? 'true' : 'false');
-      tabMG.setAttribute('aria-selected', n===2 ? 'true' : 'false');
-    }
-    tabUX.addEventListener('click',()=>setSeg(1));
-    tabMG.addEventListener('click',()=>setSeg(2));
-
     /* 6-icon hover — smooth fill frame, revert on leave */
     const data={
-      flows:{img:'assets/1st_icon.svg', title:'I Design UX That Flows.', sub:'Designing UX that thinks like the user before the user even clicks.', bullets:['Journey Mapping','Task‑First Wireframes','No Dead‑Ends, Ever.']},
-      data:{img:'assets/2nd_icon.svg', title:'Creating Data‑Driven Designs.', sub:'From bounce rates to heatmaps, decode the why before designing the what.', bullets:['User Analytics','A/B Experiments','Conversion‑Driven Layouts']},
-      visuals:{img:'assets/3rd_icon.svg', title:'Visuals That Look Good & Feel Better', sub:"Not just pretty pixels — purpose‑led visuals that ship.", bullets:['Micro‑interactions','Design Systems','Consistency = Credibility']},
+      flows:{img:'assets/1st_icon.svg', title:'I Design UX That Flows.', sub:'Designing UX that thinks like the user before the user even clicks.', bullets:['Journey Mapping','Task-First Wireframes','No Dead-Ends, Ever.']},
+      data:{img:'assets/2nd_icon.svg', title:'Creating Data-Driven Designs.', sub:'From bounce rates to heatmaps, decode the why before designing the what.', bullets:['User Analytics','A/B Experiments','Conversion-Driven Layouts']},
+      visuals:{img:'assets/3rd_icon.svg', title:'Visuals That Look Good & Feel Better', sub:"Not just pretty pixels — purpose-led visuals that ship.", bullets:['Micro-interactions','Design Systems','Consistency = Credibility']},
       ideas:{img:'assets/4th_icon.svg', title:'Ideas, But Make It Smart', sub:'Not wild. Strategic. The kind that solve, scale, and stick.', bullets:['Brainstorm Sprints','Creative Strategy','Problem → Solution → Repeat']},
-      metrics:{img:'assets/5th_icon.svg', title:'Design That Moves Metrics', sub:'Whether CTRs or Cart Completions, I build to perform.', bullets:['SEO‑Aware Flows','Funnel Optimization','UX × Biz Impact']},
-      iterate:{img:'assets/6th_icon.svg', title:'Iterating W/O Getting Irritated :)', sub:'Feedback? Bring it on.', bullets:['Feedback‑First Process','Usability Tests']},
+      metrics:{img:'assets/5th_icon.svg', title:'Design That Moves Metrics', sub:'Whether CTRs or Cart Completions, I build to perform.', bullets:['SEO-Aware Flows','Funnel Optimization','UX × Biz Impact']},
+      iterate:{img:'assets/6th_icon.svg', title:'Iterating W/O Getting Irritated :)', sub:'Feedback? Bring it on.', bullets:['Feedback-First Process','Usability Tests']},
     };
 
     const frame  = document.getElementById('frame');
