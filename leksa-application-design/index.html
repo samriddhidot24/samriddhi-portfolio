@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Leksa Application Design — Samriddhi</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/UXAI_LOGO.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg:#1A1A1A; --header:#333333; --text:#FFFFFF; --sub:#808080;
+      --frame-w:1236px; --frame-h:523px; --page-pad:100px;
+      --accent:#A996EB; --green:#27C840;
+
+      /* KNOBS for hero layout */
+      --hero-text-max: 480px;   /* cap width for hero text/cards */
+      --hero-art-w: 50%;        /* right art width on desktop */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace}
+    a{color:inherit;text-decoration:none}
+
+    /* Global gutters */
+    .page, .case-section{padding-left:var(--page-pad);padding-right:var(--page-pad)}
+    .page{padding-top:42px;padding-bottom:60px}
+
+    /* Delivered chip */
+    .delivered{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;background:#2A2A2A;border:1px solid rgba(255,255,255,.08);border-radius:999px;font-size:18px;margin-bottom:32px}
+    .delivered img{width:18px;height:18px;display:block}
+
+    /* ===== SECTION 1 (Hero) ===== */
+    .frame{
+      width:var(--frame-w); height:var(--frame-h); margin:0 auto;
+      background:var(--header); border:1px solid #fff; border-radius:14px;
+      padding:32px 36px 28px; position:relative; overflow:hidden;
+      box-shadow:0 10px 40px rgba(0,0,0,.35)
+    }
+    .title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;margin:0 0 6px}
+    .sub{font-family:'Space Grotesk',sans-serif;font-weight:400;font-size:20px;color:var(--sub);margin:0 0 20px;max-width:860px;line-height:1.35}
+
+    .frame-grid{
+      display:grid;
+      grid-template-columns:minmax(420px,500px) 1fr; /* narrower left */
+      gap:32px; align-items:start;
+    }
+    .callouts{
+      display:flex;flex-direction:column;gap:18px;position:relative;z-index:2;
+      max-width:var(--hero-text-max);            /* force earlier wrapping */
+    }
+    .callout{
+      background:#2A2A2A;border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;padding:16px 18px;font-size:14px;color:#D6D6D6;
+      line-height:1.6;max-width:100%;
+    }
+
+    /* Hero illustration pinned to frame edges (no gaps) */
+    .shots{
+      position:absolute; top:0; right:0; bottom:0;   /* zero spacing */
+      width:min(var(--hero-art-w), 720px);
+      display:flex; align-items:flex-end; justify-content:flex-end;
+      pointer-events:none; z-index:1;
+    }
+    .shot-hero{
+      height:100%; width:auto; object-fit:contain; background:transparent; display:block;
+      border-radius:0; filter:none;
+    }
+
+    /* Info row */
+    .info{display:grid;grid-template-columns:auto auto auto auto;gap:200px;margin-top:40px;font-size:16px}
+    .info h4{font-family:'Space Grotesk',sans-serif;font-weight:400;font-size:20px;margin:0 0 10px}
+    .info ul{list-style:none;margin:0;padding:0}
+    .info li{margin:6px 0}
+    .chip{display:inline-flex;align-items:center;gap:8px;background:#2D2D2D;padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);margin:6px 0}
+    .chip img{width:18px;height:18px;display:block}
+
+    /* ===== SECTION 2 ===== */
+    .case-section{margin:60px auto 0}
+    .case-inner{max-width:var(--frame-w);margin:0 auto}
+
+    /* Vertical rhythm helpers */
+    .stack-32 > * + *{margin-top:32px}
+    .stack-20 > * + *{margin-top:20px}
+    .stack-40 > * + *{margin-top:40px}
+    .mt-24{margin-top:24px !important}
+    .mt-100{margin-top:100px !important}
+
+    /* ensure 32px gap from any card to the next heading */
+    .case-inner .ps-card + .case-h2{margin-top:32px}
+
+    .case-h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:400;margin:0}
+    .case-h2.purple{color:#A996EB}
+    .case-h2.green{color:var(--green)}
+
+    .ps-card{background:#2A2A2A;border-radius:10px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+    .ps-text{
+      font-size:16px;
+      color:#FFFFFF;
+      line-height:1.55;
+      margin:0;
+      font-family:'JetBrains Mono',monospace;
+    }
+    .ps-card li{
+      font-size:16px;
+      color:#FFFFFF;
+      font-family:'JetBrains Mono',monospace;
+    }
+
+    .approach-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .approach{background:#2A2A2A;border-radius:10px;padding:16px;font-size:14px;display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.08)}
+    .approach img{width:52px;height:52px}
+
+    /* Glossy table */
+    .kpi-wrap{border-radius:14px;overflow:hidden}
+    .kpi{width:100%;border-collapse:collapse;font-size:14px}
+    .kpi th,.kpi td{padding:14px 16px;text-align:left}
+    .glossy-table{
+      background:linear-gradient(180deg,#2a2a2a 0%, #1c1c1c 100%);
+      border:1px solid rgba(255,255,255,0.15); border-radius:14px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.10), 0 12px 30px rgba(0,0,0,.55);
+    }
+    .glossy-table thead th{
+      background:linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06));
+      color:#fff;font-weight:600;letter-spacing:.02em
+    }
+    .glossy-table tbody td{color:#d6d6d6;border-top:1px solid rgba(255,255,255,.06)}
+    .glossy-table tbody tr:nth-child(even){background:rgba(255,255,255,0.03)}
+    .glossy-table tbody tr:hover td{background:rgba(255,255,255,0.08);transition:background .2s ease}
+
+    /* ===== SECTION 3 (Wireframes & Interaction Flow) ===== */
+    .wf-desc{
+      font-size:16px; color:#FFFFFF; font-family:'JetBrains Mono',monospace;
+      line-height:1.55; max-width:var(--frame-w); margin:0;
+    }
+    .wf-frame{
+      width:100%; max-width:1240px; height:860px;  /* ~800–900 */
+      background:#2A2A2A; border:1px solid rgba(255,255,255,.14);
+      border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+      overflow:hidden;
+    }
+    .wf-scroll{height:100%; overflow-y:auto; overflow-x:hidden; padding:0;}
+    .wf-scroll img{display:block; width:100%; height:auto;}
+    .wf-note{
+      margin-top:24px; font-size:13px; color:#C7C7C7;
+      font-family:'JetBrains Mono',monospace; line-height:1.55;
+      max-width:var(--frame-w);
+    }
+
+    /* ===== SECTION 4 (High-Fidelity UI & Design System) ===== */
+    .media-frame{
+      width:100%; max-width:1240px;
+      background:#2A2A2A; border:1px solid rgba(255,255,255,.14);
+      border-radius:12px; box-shadow:0 6px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+      overflow:hidden;
+    }
+    .media-frame video{display:block; width:100%; height:auto}
+    .proto-embed{width:100%; height:650px; display:block}
+    .media-frame img{display:block; width:100%; height:auto}
+
+    /* Header / Footer (sticky + interactions) */
+    header{position:sticky;top:0;z-index:9999;background:rgba(51,51,51,.65);backdrop-filter:saturate(140%) blur(12px)}
+    .header-inner{position:relative;display:flex;align-items:center;justify-content:space-between;min-height:80px;padding:0 var(--page-pad)}
+    .brand{position:relative;display:flex;align-items:center}
+    .brand img{width:52px;height:52px;border-radius:50%}
+    .hello-badge{position:absolute;left:64px;top:50%;transform:translateY(-50%) translateX(-6px);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+    .hello-chip{position:relative;display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:14px;white-space:nowrap;font:600 14px 'JetBrains Mono',monospace;color:#F5F5F5;background:#2b2b2b;background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.35)}
+    .hello-chip::before{content:"";position:absolute;left:-7px;top:50%;transform:translateY(-50%) rotate(45deg);width:10px;height:10px;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.05));border-left:1px solid rgba(255,255,255,.18);border-top:1px solid rgba(255,255,255,.18)}
+    .brand:hover .hello-badge{opacity:1;transform:translateY(-50%) translateX(0)}
+    .nav{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:24px}
+    .nav a{font:600 18px 'JetBrains Mono',monospace;padding:8px 12px;border-radius:10px}
+    .nav a:hover{background:#3D3D3D}
+    .actions{display:flex;gap:16px;align-items:center}
+    .touch,.resume-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;font:600 16px 'JetBrains Mono',monospace;cursor:pointer}
+    .touch:hover{background:#3D3D3D}
+    .resume-btn{border:1px solid transparent;background:linear-gradient(#1f1f1f,#1f1f1f) padding-box,linear-gradient(120deg,rgba(255,255,255,.9),rgba(255,255,255,.3),rgba(255,255,255,.9)) border-box;background-size:100% 100%,300% 100%;animation:borderSlide 6s linear infinite}
+    @keyframes borderSlide{to{background-position:0 0,300% 0}}
+    .resume-btn img,.touch img{transition:transform .4s ease}
+    .resume-btn:hover img{transform:translateY(-3px) rotate(-10deg) scale(1.05)}
+    .touch:hover img{transform:translateX(5px) rotate(8deg)}
+footer {
+  background:#333;
+  padding:24px var(--page-pad);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font:400 14px 'JetBrains Mono',monospace;
+  margin-top:120px
+}
+footer img{display:block}
+   footer .left {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+footer .left img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+    /* Responsive */
+    @media (max-width:1440px){
+      .frame{width:calc(100% - 2px)}
+    }
+    @media (max-width:1100px){
+      :root{--page-pad:24px}
+      .frame-grid{grid-template-columns:1fr}
+      .info{grid-template-columns:1fr 1fr;gap:80px}
+      .approach-row{grid-template-columns:1fr 1fr}
+      .shots{position:relative;top:auto;right:auto;bottom:auto;width:100%;min-height:320px;margin-top:8px}
+      .shot-hero{width:100%;height:auto;border-radius:10px}
+      .wf-frame{height:70vh; max-width:100%;}
+      .proto-embed{height:520px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="Home">
+        <img src="assets/UXAI_LOGO.svg" alt="Avatar">
+        <div class="hello-badge" aria-hidden="true"><div class="hello-chip">Hi, I'm Samriddhi</div></div>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="/#works">My Works</a>
+        <a href="/about-me/">About Me</a>
+        <a href="https://medium.com/@samriddhidt" target="_blank" rel="noopener">I Write</a>
+      </nav>
+      <div class="actions">
+        <a class="touch" href="mailto:hi@buildwithsam.work"><img src="assets/get_in_touch.svg" alt=""> Get In Touch</a>
+        <a class="resume-btn" href="/resume.pdf" target="_blank" rel="noopener"><img src="assets/resume_icon.svg" alt=""> RESUME</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="page">
+    <div class="delivered"><img src="assets/delivered.svg" alt=""> <span>Delivered</span></div>
+
+    <!-- HERO -->
+    <section class="frame" aria-label="Project Hero">
+      <h1 class="title">LEKSA APPLICATION DESIGN</h1>
+      <p class="sub">
+        BRIDGING HARDWARE AND SOFTWARE: UX FOR NEXT-GEN LIGHTING<br>
+        AUTOMATION WITH THE 44 VOLTS R&amp;D TEAM.
+      </p>
+
+      <div class="frame-grid">
+        <div class="callouts">
+          <div class="callout">Full-Stack Design Journey: Onboarding, Fixture Management, and Scene Orchestration.</div>
+          <div class="callout">Designed to simplify complex controls into smooth, human-friendly interactions.</div>
+          <div class="callout">Focus on usability, clarity, and scalability for both casual users and professional setups.</div>
+        </div>
+        <!-- right column reserved; art is absolutely positioned -->
+      </div>
+
+      <!-- Right-side art (export with transparent background) -->
+      <div class="shots" aria-hidden="true">
+        <img class="shot-hero" src="assets/hero_illustration.svg" alt="Leksa hero illustration">
+      </div>
+    </section>
+
+    <!-- Info row -->
+    <section class="info" aria-label="Project Details">
+      <div>
+        <h4>TEAM</h4>
+        <ul><li>UX Designer</li><li>R&amp;D Sub Team</li><li>1 Engineers</li></ul>
+      </div>
+      <div>
+        <h4>MY ROLE</h4>
+        <ul><li>Conceptualization</li><li>Design</li><li>Usability Testing</li><li>Dev Handoff</li></ul>
+      </div>
+      <div>
+        <h4>PROJECT TIMELINE</h4>
+        <ul><li>4 Months</li></ul>
+      </div>
+      <div>
+        <h4>TOOLS</h4>
+        <div class="chip"><img src="assets/figma.svg" alt=""> <span>Figma</span></div>
+        <div class="chip"><img src="assets/exaclidraw.svg" alt=""> <span>Excalidraw</span></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== SECTION 2 ===== -->
+  <section class="case-section" aria-label="Background, Objectives, Approach, Table">
+    <div class="case-inner stack-32">
+      <h3 class="case-h2 purple">BACKGROUND</h3>
+      <div class="ps-card">
+        <p class="ps-text">
+          Leksa is a smart lighting automation application designed in collaboration with the R&amp;D Team at 44 Volts Designs.
+          The goal was to create a seamless interface that bridges hardware and software, allowing users to add fixtures,
+          control lighting parameters, and build customizable scenes with ease. Unlike off-the-shelf apps, Leksa had to align
+          with custom-built hardware, which meant designing flows that simplified technical complexity into intuitive,
+          everyday interactions.
+        </p>
+      </div>
+
+      <h3 class="case-h2 green">OBJECTIVES / DESIGN GOALS</h3>
+      <div class="ps-card">
+        <ul style="margin:0;padding-left:20px;">
+          <li>Simplify fixture setup for non-technical users.</li>
+          <li>Provide intuitive controls for brightness, color, and temperature.</li>
+          <li>Enable flexible scene creation for home + professional use.</li>
+          <li>Ensure scalability for future fixtures and hardware updates.</li>
+        </ul>
+      </div>
+
+      <div class="stack-20">
+        <h3 class="case-h2">MY APPROACH TO THIS PROBLEM</h3>
+        <div class="approach-row">
+          <div class="approach"><img src="assets/collabwithrnd.svg" alt=""> Collaboration With R&amp;D</div>
+          <div class="approach"><img src="assets/wirefram.svg" alt=""> Wireframes &amp; Interaction Flows</div>
+          <div class="approach"><img src="assets/highfidelity.svg" alt=""> High-Fidelity UI &amp; Design System</div>
+          <div class="approach"><img src="assets/validation.svg" alt=""> Validation With Real Fixtures</div>
+        </div>
+      </div>
+
+      <h3 class="case-h2 mt-100">1. COLLABORATION WITH R&amp;D TEAM</h3>
+      <p style="font-size:14px;color:#9C9C9C;margin:16px 0 6px;">Defining the non-negotiables:</p>
+
+      <div class="kpi-wrap glossy-table">
+        <table class="kpi" aria-label="Non-negotiables Table">
+          <thead>
+            <tr><th style="width:32%">Principle</th><th>Why It Mattered</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Frictionless Pairing</td><td>First-time setup had to feel effortless, else users drop off immediately.</td></tr>
+            <tr><td>State Sync Everywhere</td><td>App, cloud, and fixtures always aligned to build trust.</td></tr>
+            <tr><td>Real-Time Feedback</td><td>Immediate response (&lt;300 ms) builds confidence in controls.</td></tr>
+            <tr><td>Conflict Handling</td><td>Prevent confusion when multiple users control the same fixture.</td></tr>
+            <tr><td>Offline Resilience</td><td>Lights should still work when Wi-Fi drops — no excuses.</td></tr>
+            <tr><td>Clear Recovery</td><td>Errors explained in human terms, with retries and diagnostics.</td></tr>
+            <tr><td>Scalability</td><td>Works for 3 fixtures at home or 300 on stage.</td></tr>
+            <tr><td>Accessibility &amp; Safety</td><td>Dark UI, high contrast, safe brightness floors, one-hand controls.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: WIREFRAMES & INTERACTION FLOW ===== -->
+  <section class="case-section mt-100" aria-label="Wireframes & Interaction Flow">
+    <div class="case-inner">
+      <div class="stack-40">
+        <h3 class="case-h2">2. WIREFRAMES &amp; INTERACTION FLOW</h3>
+
+        <p class="wf-desc">
+          Before jumping into high-fidelity screens, I mapped out the user journey and sketched wireframes to validate the flow
+          with the R&amp;D team. The focus was on clarity: from onboarding to adding fixtures to creating scenes — every step needed
+          to feel effortless and logical.
+        </p>
+
+        <div class="wf-frame" role="region" aria-label="Wireframe board (scroll to view)">
+          <div class="wf-scroll">
+            <img src="assets/leksa_wireframe.png" alt="Wireframes & interaction flow board">
+          </div>
+        </div>
+
+        <!-- 24px below the frame: the one-line note -->
+        <p class="wf-note">
+          The above wireframes and flow were shared with the client and R&amp;D team for alignment before moving into
+          high-fidelity design. This ensured every edge case was covered early, reducing rework later.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 4: HIGH-FIDELITY UI & DESIGN SYSTEM ===== -->
+  <section class="case-section mt-100" aria-label="High-Fidelity UI & Design System">
+    <div class="case-inner">
+      <div class="stack-40">
+        <h3 class="case-h2">3. HIGH-FIDELITY UI &amp; DESIGN SYSTEM</h3>
+
+        <!-- Auto-play video (no controls). Starts when section comes into view. -->
+        <div class="media-frame">
+          <video
+            class="auto-video"
+            src="assets/Showreel-Grid-Mobile-%5Bremix%5D%20(1).mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata">
+          </video>
+        </div>
+
+        <!-- 24px gap -->
+        <div class="media-frame mt-24">
+          <iframe
+            class="proto-embed"
+            style="border: 1px solid rgba(0, 0, 0, 0.1);"
+            width="800" height="450"
+            src="https://embed.figma.com/proto/78mmEQgZQWkcSqe6qnCscC/Leksa?page-id=159%3A8138&node-id=275-29396&starting-point-node-id=275%3A29205&embed-host=share"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- 24px gap -->
+        <div class="media-frame mt-24">
+          <img src="assets/high_fidelity_leksa.png" alt="High-fidelity UI boards for Leksa">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="contact">
+  <div class="left">Made w <img src="assets/heart.svg" width="14" alt="heart"> By Samriddhi.</div>    <div class="right">
+      <a class="touch" href="mailto:hi@buildwithsam.work"><img src="assets/get_in_touch.svg" alt=""> Get In Touch</a>
+      <a class="resume-btn" href="/resume.pdf" target="_blank" rel="noopener"><img src="assets/resume_icon.svg" alt=""> RESUME</a>
+    </div>
+  </footer>
+
+  <!-- Autoplay when section is visible -->
+  <script>
+    (function(){
+      const vids = document.querySelectorAll('.auto-video');
+      if (!('IntersectionObserver' in window) || vids.length === 0) return;
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(entry=>{
+          const v = entry.target;
+          if (entry.isIntersecting) {
+            v.play().catch(()=>{});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: 0.35 });
+      vids.forEach(v=>io.observe(v));
+    })();
+  </script>
+</body>
+</html>
