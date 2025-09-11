@@ -118,7 +118,8 @@
     .detail ul{margin:0;padding-left:18px}
     .detail li{font:500 14px "JetBrains Mono",monospace;margin:4px 0}
 
-    .hi{font:700 200px "Space Grotesk",sans-serif;line-height:.8;margin:0;background:linear-gradient(#fff,#ddd);-webkit-background-clip:text;color:transparent}
+    .hi{font:700 200px "Space Grotesk",sans-serif;line-height:.8;margin:0;background:linear-gradient(#fff,#ddd);-webkit-background-clip:text;background-clip:text;
+color:transparent}
     .subline{font:400 28px "JetBrains Mono",monospace;color:#fff;margin:0 0 22px}
     .cta-line{display:flex;gap:16px}
 
@@ -134,8 +135,11 @@
     .seg-active{position:absolute;top:6px;left:6px;height:calc(100% - 12px);width:calc(50% - 12px);border-radius:18px;background:linear-gradient(90deg,#EC0F6A,#F26D5F 50%,#FFC76B);transition:transform .35s ease;z-index:0}
     .segmented[data-active="1"] .seg-active{transform:translateX(0)}
     .segmented[data-active="2"] .seg-active{transform:translateX(100%)}
-    .segmented[data-active="1"] #tab-ux{text-shadow:0 0 14px rgba(255,255,255,.45)}
-    .segmented[data-active="2"] #tab-mg{text-shadow:0 0 14px rgba(255,255,255,.45)}
+    #tab-ux[data-active="1"],
+#tab-mg[data-active="2"] {
+  text-shadow:0 0 14px rgba(255,255,255,.45);
+}
+
 
     /* ===== Cards row (single line) ===== */
     .cards{margin:60px auto 0;display:flex;gap:52px;justify-content:center;/* fix clipping on hover */overflow:visible;padding-inline:var(--page-x)}
